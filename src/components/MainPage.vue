@@ -58,6 +58,7 @@
         ref="unmatchedReportTableFile1"
         id="unmatchedReportTableFile1"
         class="unmatchedReportTableFile1Class"
+        primary-key="a"
       >
         <template #table-caption>{{ file1.name }}</template>
       </b-table>
@@ -104,6 +105,7 @@ export default {
         unamtchedRecordsFile2: [],
         fieldsUnmatchedReport: [
                 // {key: 'profileName', label: 'Profile Name' },
+                {key: 'connection', label: 'Connection'}
                 {key: 'transactionDate', label: 'Tran. Date' },
                 {key: 'walletReference', label: 'Wallet' },
                 {key: 'transactionAmount', label: 'Tran. Amount' },
