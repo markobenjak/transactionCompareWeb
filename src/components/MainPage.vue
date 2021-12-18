@@ -105,9 +105,9 @@ export default {
         fieldsUnmatchedReport: [
                 // {key: 'profileName', label: 'Profile Name' },
                 {key: 'connection', label: 'Connection', sortable: true},
-                {key: 'transactionDate', label: 'Tran. Date' },
+                {key: 'transactionDate', label: 'Tran. Date', sortable: true},
                 {key: 'walletReference', label: 'Wallet' },
-                {key: 'transactionAmount', label: 'Tran. Amount' },
+                {key: 'transactionAmount', label: 'Tran. Amount', sortable: true},
                 // {key: 'transactionNarrative', label: 'Tran. Narrative' },
                 // {key: 'transactionDescription', label: 'Tran. Description' },
                 // {key: 'transactionID', label: 'Tran. ID' },
