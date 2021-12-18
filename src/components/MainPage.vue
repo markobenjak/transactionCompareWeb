@@ -131,7 +131,7 @@ export default {
     makeToast(title, variant, content, delay) {
       this.$bvToast.toast(content, {
           title: title,
-          toaster: 'b-toaster-bottom-right',
+          toaster: 'b-toaster-top-right',
           variant: variant,
           solid: true,
           "auto-hide-delay": delay
