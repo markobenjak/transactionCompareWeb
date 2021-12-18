@@ -45,7 +45,7 @@
       </b-card-group>
       <b-button block variant="primary" class="unmatchedReportButton" @click="showUnmatchedReportTables()">Unmatched Report</b-button>
     </div>
-    <div class="unmatchedReportDiv" v-show="!showUnamtchedReport">
+    <div class="unmatchedReportDiv" v-show="!showUnmatchedReport">
       <b-table
         caption-top
         sticky-header
@@ -92,7 +92,7 @@ export default {
     return {
         file1: '',
         file2: '',
-        showUnamtchedReport: true,
+        showUnmatchedReport: true,
         showCompareResults: true,
         totalRecordsFile1: '',
         matchingRecordsFile1: '',
@@ -125,7 +125,8 @@ export default {
   },
   methods: {
     showUnmatchedReportTables(){
-      this.showUnamtchedReport = false;
+      this.showUnmatchedReport = false;
+      this.showCompareResults = false;
     },
 
     makeToast(title, variant, content, delay) {
@@ -145,35 +146,40 @@ export default {
         return false;
     },
 
-    sendFiles(){
-        const headers = {
-          'Content-Type': '"multipart/form-data"'       
-        }
-        let formData1 = new FormData();
-        formData1.append('csvFile', this.file1);
-        formData1.append('csvFile2', this.file2);
-        console.log(formData1)
-        let URL = 'api/uploadFiles';
-        let promise = axios.post(URL, formData1, {
-          headers: headers
-          })
-        return promise.then((response) => {
-          console.log(response);
-            if(response.data.responseMessage == 'SUCCESS'){
-              alert('Password Changed Successfully');
-              this.totalRecordsFile1 = response.data.totalNumberFile1;
-              this.totalUnmatchedRecordsFile1 = response.data.unmatchedRecordsFile1;
-              this.matchingRecordsFile1 = this.totalRecordsFile1 - this.totalUnmatchedRecordsFile1;
-              this.unmatchedRecordsFile1 = response.data.clientProfileFile1;
-              this.totalRecordsFile2 = response.data.totalNumberFile2;
-              this.totalUnmatchedRecordsFile2 = response.data.unmatchedRecordsFile1;
-              this.matchingRecordsFile2 = this.totalRecordsFile2 - this.totalUnmatchedRecordsFile2;
-              this.unmatchedRecordsFile2 = response.data.clientProfileFile2;
-              this.showCompareResults = false;
-              this.makeToast('File Comparison Finished', 'primary', response.data.responseMessage, 10000);
-            }else{
-              this.makeToast('File Comparison Failed', 'warning', response.data.responseMessage, 10000);
-            }
+    clearData(){
+      this.showCompareResults = true;
+    },
+
+    sendFiles() {
+      this.clearData();
+      const headers = {
+        'Content-Type': '"multipart/form-data"'       
+      }
+      let formData1 = new FormData();
+      formData1.append('csvFile', this.file1);
+      formData1.append('csvFile2', this.file2);
+      console.log(formData1)
+      let URL = 'api/uploadFiles';
+      let promise = axios.post(URL, formData1, {
+        headers: headers
+        })
+      return promise.then((response) => {
+        console.log(response);
+          if(response.data.responseMessage == 'SUCCESS'){
+            alert('Password Changed Successfully');
+            this.totalRecordsFile1 = response.data.totalNumberFile1;
+            this.totalUnmatchedRecordsFile1 = response.data.unmatchedRecordsFile1;
+            this.matchingRecordsFile1 = this.totalRecordsFile1 - this.totalUnmatchedRecordsFile1;
+            this.unmatchedRecordsFile1 = response.data.clientProfileFile1;
+            this.totalRecordsFile2 = response.data.totalNumberFile2;
+            this.totalUnmatchedRecordsFile2 = response.data.unmatchedRecordsFile1;
+            this.matchingRecordsFile2 = this.totalRecordsFile2 - this.totalUnmatchedRecordsFile2;
+            this.unmatchedRecordsFile2 = response.data.clientProfileFile2;
+            this.showCompareResults = false;
+            this.makeToast('File Comparison Finished', 'primary', response.data.responseMessage, 10000);
+          }else{
+            this.makeToast('File Comparison Failed', 'warning', response.data.responseMessage, 10000);
+          }
 
         },
         ).catch(err => {
