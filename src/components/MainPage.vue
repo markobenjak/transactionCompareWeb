@@ -126,7 +126,6 @@ export default {
   methods: {
     showUnmatchedReportTables(){
       this.showUnmatchedReport = false;
-      this.showCompareResults = false;
     },
 
     makeToast(title, variant, content, delay) {
@@ -148,6 +147,7 @@ export default {
 
     clearData(){
       this.showCompareResults = true;
+      this.showUnmatchedReport = true;
     },
 
     sendFiles() {
