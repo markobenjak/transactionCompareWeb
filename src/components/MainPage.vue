@@ -105,7 +105,7 @@ export default {
         unamtchedRecordsFile2: [],
         fieldsUnmatchedReport: [
                 // {key: 'profileName', label: 'Profile Name' },
-                {key: 'connection', label: 'Connection'}
+                {key: 'connection', label: 'Connection'},
                 {key: 'transactionDate', label: 'Tran. Date' },
                 {key: 'walletReference', label: 'Wallet' },
                 {key: 'transactionAmount', label: 'Tran. Amount' },
