@@ -130,7 +130,7 @@ export default {
     makeToast(title, variant, content, delay) {
       this.$bvToast.toast(content, {
           title: title,
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           variant: variant,
           solid: true,
           "auto-hide-delay": delay
@@ -170,6 +170,8 @@ export default {
               this.unmatchedRecordsFile2 = response.data.clientProfileFile2;
               this.showCompareResults = false;
               this.makeToast('File Comparison Finished', 'primary', response.data.responseMessage, 10000);
+            }else{
+              this.makeToast('File Comparison Failed', 'warning', response.data.responseMessage, 10000);
             }
 
         },
