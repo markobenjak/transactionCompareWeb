@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <b-button class="clearButton" block variant="outline-danger" v-show="showClearButton" @click="clearScreen()">Clear</b-button>
     <div class="inputFiles">
       <b-form-group label="Select File 1:" label-cols-sm="2" label-size="sm">
         <b-form-file 
@@ -25,7 +26,7 @@
         </b-form-file>
         <div class="validationError" v-if="!$v.file1.required"></div>
       </b-form-group>
-        <b-button block variant="primary" @click="sendFiles" :disabled="checkCompareValidations()">Compare</b-button>
+        <b-button block variant="outline-success" @click="sendFiles" :disabled="checkCompareValidations()">Compare</b-button>
     </div>
     <div class="compareFiles" v-show="!showCompareResults">
       <b-card-group deck>
@@ -43,7 +44,7 @@
           <b-card-text>Unmatched Records: {{totalUnmatchedRecordsFile2}} </b-card-text>
         </b-card>
       </b-card-group>
-      <b-button block variant="primary" class="unmatchedReportButton" @click="showUnmatchedReportTables()">Unmatched Report</b-button>
+      <b-button block variant="outline-info" class="unmatchedReportButton" :disabled="this.totalUnmatchedRecordsFile2 == 0 && this.totalUnmatchedRecordsFile1 == 0" @click="showUnmatchedReportTables()">Unmatched Report</b-button>
     </div>
     <div class="unmatchedReportDiv" v-show="!showUnmatchedReport">
       <b-table
@@ -92,6 +93,7 @@ export default {
     return {
         file1: '',
         file2: '',
+        showClearButton: false,
         showUnmatchedReport: true,
         showCompareResults: true,
         totalRecordsFile1: '',
@@ -127,7 +129,6 @@ export default {
     showUnmatchedReportTables(){
       this.showUnmatchedReport = false;
     },
-
     makeToast(title, variant, content, delay) {
       this.$bvToast.toast(content, {
           title: title,
@@ -137,7 +138,21 @@ export default {
           "auto-hide-delay": delay
       })
     },
-
+    clearScreen(){
+      this.showCompareResults = true;
+      this.showUnmatchedReport = true;
+      this.file2 = '';
+      this.file1 = '';
+      this.totalRecordsFile1 = '';
+      this.totalUnmatchedRecordsFile1 = '';
+      this.matchingRecordsFile1 = '';
+      this.unmatchedRecordsFile1 = [];
+      this.totalRecordsFile2 = '';
+      this.totalUnmatchedRecordsFile2 = '';
+      this.matchingRecordsFile2 = '';
+      this.unmatchedRecordsFile2 = [];
+      this.showClearButton = false;
+    },
     checkCompareValidations (){
       if(this.$v.file1.$invalid || this.$v.file2.$invalid)
         return true;
@@ -148,6 +163,7 @@ export default {
     clearData(){
       this.showCompareResults = true;
       this.showUnmatchedReport = true;
+      this.showClearButton = false;
     },
 
     sendFiles() {
@@ -177,6 +193,7 @@ export default {
             this.unmatchedRecordsFile2 = response.data.clientProfileFile2;
             this.showCompareResults = false;
             this.makeToast('File Comparison Finished', 'primary', response.data.responseMessage, 10000);
+            this.showClearButton = true;
           }else{
             this.makeToast('File Comparison Failed', 'warning', response.data.responseMessage, 10000);
           }
@@ -196,6 +213,7 @@ export default {
   .inputFiles {
     width: 50%;
     margin : 0 auto;
+    margin-top: 1%;
   }
   .compareFiles {
     width: 50%;
@@ -217,5 +235,10 @@ export default {
     float: left;
     width: 48%;
     margin-left:2%;
+  }
+  .clearButton{
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 1%;
   }
 </style>
