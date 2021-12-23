@@ -180,7 +180,6 @@ export default {
         headers: headers
         })
       return promise.then((response) => {
-        console.log(response);
           if(response.data.responseMessage == 'SUCCESS'){
             alert('Password Changed Successfully');
             this.totalRecordsFile1 = response.data.totalNumberFile1;
@@ -200,8 +199,8 @@ export default {
 
         },
         ).catch(err => {
-            //alert(err.response.data.error);
-            console.log(err);
+          this.makeToast('File Comparison Failed', 'danger', err, 10000);
+
         })
     }
   }
