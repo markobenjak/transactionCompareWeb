@@ -174,14 +174,12 @@ export default {
       let formData1 = new FormData();
       formData1.append('csvFile', this.file1);
       formData1.append('csvFile2', this.file2);
-      console.log(formData1)
       let URL = 'api/uploadFiles';
       let promise = axios.post(URL, formData1, {
         headers: headers
         })
       return promise.then((response) => {
           if(response.data.responseMessage == 'SUCCESS'){
-            alert('Password Changed Successfully');
             this.totalRecordsFile1 = response.data.totalNumberFile1;
             this.totalUnmatchedRecordsFile1 = response.data.unmatchedRecordsFile1;
             this.matchingRecordsFile1 = this.totalRecordsFile1 - this.totalUnmatchedRecordsFile1;
